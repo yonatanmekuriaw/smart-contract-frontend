@@ -22,6 +22,11 @@ const FirstSmartContract = () => {
     const message = await loadCurrentMessage();
     setMessage(message);
     addSmartContractListener();
+
+    const {address, status} = await getCurrentWalletConnected();
+    
+    setWallet(address);
+    setStatus(status);
   }, []);
 
   function addSmartContractListener() { //TODO: implement

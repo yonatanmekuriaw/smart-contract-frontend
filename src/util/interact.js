@@ -43,7 +43,34 @@ export const connectWallet = async () => {
 };
 
 export const getCurrentWalletConnected = async () => {
-  
+  if(window.ethereum){
+      try{
+          const addressArray = await window.ethereum.request({
+              method: "eth_accounts",
+          });
+          if(addressArray.length > 0){
+              return{
+                  address: addressArray[0],
+                  status: "Write a message in the text field above",
+              };
+          } else {
+              return {
+                  address : "",
+                  status: "Connect to Metamask using the top right button.",
+              };
+          }
+      } catch(err){
+          return {
+              address: "",
+              status: "😥 " + err.message,
+          };
+      }
+  } else {
+    return {
+        address : "",
+        status : "🦊" + "You must install Metamask, a virrtual Ethereum wallet, in your browser"
+    }
+}
 };
 
 export const updateMessage = async (address, message) => {
