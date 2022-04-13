@@ -19,11 +19,23 @@ const FirstSmartContract = () => {
 
   //called only once
   useEffect(async () => {
-    
+    const message = await loadCurrentMessage();
+    setMessage(message);
+    addSmartContractListener();
   }, []);
 
   function addSmartContractListener() { //TODO: implement
-    
+    fSmartContract.events.UpdatedMessages(
+      {},(error,data) => {
+        if(error){
+          setStatus('😥' + error.message);
+        }else{
+          setMessage(data.returnValues[1]);
+          setNewMessage("This is my new message");
+          setStatus("My new message has been updated");
+        }
+      }
+    )
   }
 
   function addWalletListener() { //TODO: implement
@@ -31,7 +43,9 @@ const FirstSmartContract = () => {
   }
 
   const connectWalletPressed = async () => { //TODO: implement
-    
+    const walletResponse = await connectWallet();
+    setStatus(walletResponse.status);
+    setWallet(walletResponse.address);
   };
 
   const onUpdatePressed = async () => { //TODO: implement
@@ -75,4 +89,4 @@ const FirstSmartContract = () => {
   );
 };
 
-export default HelloWorld;
+export default FirstSmartContract;

@@ -1,10 +1,10 @@
-import HelloWorld from './HelloWorld'
+import FirstSmartContract from './FirstSmartContract'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-    <HelloWorld></HelloWorld>
+    <FirstSmartContract></FirstSmartContract>
     </div>
   );
 }

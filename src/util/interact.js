@@ -12,11 +12,34 @@ export const fSmartContract = new web3.eth.Contract(
 );
 
 export const loadCurrentMessage = async () => { 
-  
+  const message = await fSmartContract.methods.message().call();
+  return message;
 };
 
 export const connectWallet = async () => {
-  
+  if(window.ethereum){
+      try{
+          const addressArray = await window.ethereum.request(
+              {
+                  method: "eth_requestAccounts",
+              });
+              const obj = {
+                  status : "Write your message in the text field above.",
+                  address: addressArray[0],
+              };
+              return obj;
+      }catch(err){
+          return {
+              address : "",
+              status: "😥 " + err.message,
+          };
+      }
+  } else {
+      return {
+          address : "",
+          status : "🦊" + "You must install Metamask, a virrtual Ethereum wallet, in your browser"
+      }
+  }
 };
 
 export const getCurrentWalletConnected = async () => {
